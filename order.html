@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
     <style>
         :root {
             --primary-color: #FF5A5F;
@@ -148,7 +149,6 @@
             color: var(--secondary-color);
         }
         
-        /* New animation for confirmation */
         .confirmed-icon-animation {
             animation: zoomIn 1.5s ease-out;
         }
@@ -159,7 +159,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Existing status animations */
         .status-icon.pending-confirmation {
             animation: pulse 2s infinite;
         }
@@ -218,8 +217,8 @@
             max-width: 200px;
         }
         
-        .update-button {
-            background-color: var(--secondary-color);
+        .pay-button {
+            background-color: var(--success-color);
         }
 
         .cancel-button {
@@ -231,7 +230,7 @@
             box-shadow: var(--shadow-lg);
         }
         
-        .update-button:hover { background-color: #00857a; }
+        .pay-button:hover { background-color: #008c3e; }
         .cancel-button:hover { background-color: #C0392B; }
 
         .back-to-menu-button {
@@ -245,14 +244,97 @@
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
-            transition: var(--transition);
-            box-shadow: var(--shadow-md);
             display: inline-block;
         }
         
         .back-to-menu-button:hover {
             transform: translateY(-3px);
             background-color: #00857a;
+        }
+
+        .refresh-status-button {
+            margin-top: 15px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .refresh-status-button:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .last-updated {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Modal for user details */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
         }
 
         @keyframes fadeIn {
@@ -262,199 +344,279 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">Hungryyy</div>
-            <div class="tagline">Scan, Order, Eat</div>
+    <div class="container" id="order-container">
         </div>
 
-        <h2 class="thank-you-message">Thank You for your Order!</h2>
-        
-        <div class="order-details-card">
-            <div class="order-status-section">
-                <span class="status-text" id="order-status">Pending Confirmation</span>
-                <i class="fas fa-clock status-icon pending-confirmation" id="status-icon"></i>
-            </div>
-            
-            <div class="detail-item">
-                <span>Order No.:</span>
-                <span id="order-number">#8646</span>
-            </div>
-            <div class="detail-item">
-                <span>Table No.:</span>
-                <span id="table-number">5</span>
-            </div>
-        </div>
-
-        <div class="order-details-card">
-            <h3>Order Summary</h3>
-            <div id="order-items-summary">
-                <div class="summary-item">
-                    <span>French Fries Salty (x5)</span>
-                    <span>₹350.00</span>
+    <div class="modal-overlay" id="user-details-modal">
+        <div class="modal-content">
+            <h3>Please provide your details</h3>
+            <form id="user-details-form">
+                <div class="form-group">
+                    <label for="customer-name">Name</label>
+                    <input type="text" id="customer-name" required>
                 </div>
-            </div>
-            <div class="summary-total">
-                <span>Total Amount:</span>
-                <span id="total-amount">₹350.00</span>
-            </div>
+                <div class="form-group">
+                    <label for="customer-phone">Phone Number</label>
+                    <input type="tel" id="customer-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-email">Email (Optional)</label>
+                    <input type="email" id="customer-email">
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="action-button pay-button">Proceed to Pay</button>
+                </div>
+            </form>
         </div>
-        
-        <div class="action-buttons" id="action-buttons">
-            <button class="action-button update-button" id="update-button">Update Order</button>
-            <button class="action-button cancel-button" id="cancel-button">Cancel Order</button>
-        </div>
-
-        <a href="menu.html" class="back-to-menu-button" style="display: none;" id="back-to-menu-after-cancel">Back to Menu</a>
     </div>
     
     <audio id="confirmation-sound" src="../sound/sample_confirm_success01_kofi_by_miraclei-360153.mp3" preload="auto"></audio>
 
     <script>
-        const confirmationSound = document.getElementById('confirmation-sound');
-        const statusIcon = document.getElementById('status-icon');
-        const orderStatus = document.getElementById('order-status');
-        const actionButtonsContainer = document.getElementById('action-buttons');
-        const updateButton = document.getElementById('update-button');
-        const cancelButton = document.getElementById('cancel-button');
-        const backToMenuAfterCancelButton = document.getElementById('back-to-menu-after-cancel');
-
+        const API_URL = 'https://backend-hungryy.onrender.com/api';
         let currentOrder = null;
 
-        // Function to update the UI with order details
-        function updateUI(order) {
-            currentOrder = order;
+        const orderContainer = document.getElementById('order-container');
+        const userDetailsModal = document.getElementById('user-details-modal');
+        const userDetailsForm = document.getElementById('user-details-form');
+
+        // Add function to fetch latest order status from backend
+        async function fetchLatestOrderStatus(orderId) {
+            try {
+                const response = await fetch(`${API_URL}/admin/orders`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
+                }
+                const orders = await response.json();
+                const latestOrder = orders.find(o => o.id == orderId);
+                return latestOrder;
+            } catch (error) {
+                console.error('Error fetching order status:', error);
+                return null;
+            }
+        }
+
+        // Add function to update order status
+        async function updateOrderStatusFromBackend() {
+            if (!currentOrder || !currentOrder.orderId) return;
+            
+            const latestOrder = await fetchLatestOrderStatus(currentOrder.orderId);
+            if (latestOrder && latestOrder.status !== currentOrder.status) {
+                // Update localStorage with new status
+                currentOrder.status = latestOrder.status;
+                localStorage.setItem('lastOrder', JSON.stringify(currentOrder));
+                renderOrder(currentOrder);
+                console.log('Order status updated to:', latestOrder.status);
+            }
+            updateLastUpdatedTime();
+        }
+
+        function renderOrder(order) {
             if (!order) {
-                // Handle case where order is null
-                document.querySelector('.container').innerHTML = `
+                orderContainer.innerHTML = `
                     <div class="header">
                         <div class="logo">Hungryyy</div>
                     </div>
-                    <h2 class="thank-you-message">No order found.</h2>
-                    <a href="menu.html" class="back-to-menu-button">Start a New Order</a>
+                    <h2 class="thank-you-message">No active order found.</h2>
+                    <a href="menu.html" class="back-to-menu-button" style="display:inline-block;">Start a New Order</a>
                 `;
                 return;
             }
 
-            document.getElementById('order-number').textContent = `#${order.orderNumber}`;
-            document.getElementById('table-number').textContent = order.tableNumber;
-            document.getElementById('total-amount').textContent = `₹${order.totalPrice.toFixed(2)}`;
-            
-            // Update status text and icon
-            orderStatus.textContent = order.status;
-            orderStatus.className = 'status-text ' + order.status.toLowerCase().replace(/ /g, '-');
-            statusIcon.className = 'status-icon';
-            
+            currentOrder = order;
+            const statusClass = order.status.toLowerCase().replace(/ /g, '-');
+            let statusIconClass = 'fas fa-clock pending-confirmation';
+            let actionButtonsHtml = `
+                <div class="action-buttons" id="action-buttons">
+                    <button class="action-button pay-button" id="pay-button">Pay Now</button>
+                    <button class="action-button cancel-button" id="cancel-button">Cancel Order</button>
+                </div>`;
+
             if (order.status === 'Confirmed') {
-                statusIcon.classList.add('fas', 'fa-check-circle', 'confirmed');
-                actionButtonsContainer.style.display = 'flex';
-                updateButton.textContent = 'Request Update'; // Change button text
-                updateButton.style.backgroundColor = 'var(--warning-color)';
-                updateButton.style.display = 'inline-block';
-                cancelButton.style.display = 'none';
-                backToMenuAfterCancelButton.style.display = 'none';
-            } else if (order.status === 'Denied') {
-                statusIcon.classList.add('fas', 'fa-times-circle', 'denied');
-                actionButtonsContainer.style.display = 'none';
-                backToMenuAfterCancelButton.style.display = 'inline-block';
-            } else if (order.status === 'Completed') {
-                statusIcon.classList.add('fas', 'fa-utensils', 'completed');
-                actionButtonsContainer.style.display = 'none';
-                backToMenuAfterCancelButton.style.display = 'inline-block';
-            } else {
-                statusIcon.classList.add('fas', 'fa-clock', 'pending-confirmation');
-                actionButtonsContainer.style.display = 'flex';
-                updateButton.textContent = 'Update Order';
-                updateButton.style.backgroundColor = 'var(--secondary-color)';
-                updateButton.style.display = 'inline-block';
-                cancelButton.style.display = 'inline-block';
-                backToMenuAfterCancelButton.style.display = 'none';
+                statusIconClass = 'fas fa-check-circle confirmed';
+                actionButtonsHtml = `<p>Your order is confirmed and is being prepared!</p>`;
+            } else if (order.status === 'Delivered' || order.status === 'Cancelled') {
+                statusIconClass = order.status === 'Delivered' ? 'fas fa-utensils completed' : 'fas fa-times-circle denied';
+                actionButtonsHtml = `<a href="menu.html" class="back-to-menu-button" style="display:inline-block;">Place Another Order</a>`;
             }
 
-            const itemsSummaryContainer = document.getElementById('order-items-summary');
+            // --- FIX: Robustly handle both array and object for order.items ---
             let itemsHtml = '';
-            
-            for (const itemName in order.items) {
-                const item = order.items[itemName];
-                itemsHtml += `
-                    <div class="summary-item">
-                        <span>${itemName} (x${item.quantity})</span>
-                        <span>₹${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                `;
+            let total = 0;
+            if (Array.isArray(order.items)) {
+                // Array of {name, quantity} (no price info)
+                itemsHtml = order.items.map(item => {
+                    // Try to get price from order.prices or fallback to 0
+                    let price = 0;
+                    if (order.cart && order.cart[item.name]) {
+                        price = order.cart[item.name].price;
+                    } else if (item.price) {
+                        price = item.price;
+                    }
+                    total += price * item.quantity;
+                    return `<div class="summary-item"><span>${item.name} (x${item.quantity})</span><span>₹${(price * item.quantity).toFixed(2)}</span></div>`;
+                }).join('');
+            } else if (typeof order.items === 'object' && order.items !== null) {
+                // Object: { itemName: {quantity, price} }
+                itemsHtml = Object.keys(order.items).map(itemName => {
+                    const item = order.items[itemName];
+                    total += (item.price || 0) * (item.quantity || 0);
+                    return `<div class="summary-item"><span>${itemName} (x${item.quantity})</span><span>₹${((item.price || 0) * (item.quantity || 0)).toFixed(2)}</span></div>`;
+                }).join('');
             }
-            itemsSummaryContainer.innerHTML = itemsHtml;
+            // If order.total_price is missing or 0, use calculated total
+            const totalAmount = (order.total_price && order.total_price > 0) ? order.total_price : total;
+
+            orderContainer.innerHTML = `
+                <div class="header">
+                    <div class="logo">Hungryyy</div>
+                    <div class="tagline">Scan, Order, Eat</div>
+                </div>
+                <h2 class="thank-you-message">Thank You for your Order!</h2>
+                <div class="order-details-card">
+                    <div class="order-status-section">
+                        <span class="status-text" id="order-status">${order.status}</span>
+                        <i class="${statusIconClass} status-icon" id="status-icon"></i>
+                    </div>
+                    <div class="detail-item">
+                        <span>Order No.:</span>
+                        <span id="order-number">#${order.orderId || order.id || ''}</span>
+                    </div>
+                    <button class="refresh-status-button" id="refresh-status-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh Status
+                    </button>
+                    <div class="last-updated" id="last-updated">Last updated: Just now</div>
+                </div>
+                <div class="order-details-card">
+                    <h3>Order Summary</h3>
+                    <div id="order-items-summary">${itemsHtml}</div>
+                    <div class="summary-total">
+                        <span>Total Amount:</span>
+                        <span id="total-amount">₹${totalAmount.toFixed(2)}</span>
+                    </div>
+                </div>
+                ${actionButtonsHtml}
+            `;
+
+            attachActionListeners();
         }
+
+        function attachActionListeners() {
+            const payButton = document.getElementById('pay-button');
+            if (payButton) {
+                payButton.addEventListener('click', () => {
+                    userDetailsModal.classList.add('show');
+                });
+            }
+
+            // Add refresh button listener
+            const refreshButton = document.getElementById('refresh-status-btn');
+            if (refreshButton) {
+                refreshButton.addEventListener('click', async () => {
+                    refreshButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+                    await updateOrderStatusFromBackend();
+                    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Status';
+                    updateLastUpdatedTime();
+                });
+            }
+        }
+
+        function updateLastUpdatedTime() {
+            const lastUpdatedElement = document.getElementById('last-updated');
+            if (lastUpdatedElement) {
+                const now = new Date();
+                lastUpdatedElement.textContent = `Last updated: ${now.toLocaleTimeString()}`;
+            }
+        }
+
+        // Commented out Razorpay integration and replaced with simulated payment
+        async function startPayment(userDetails) {
+            try {
+                // 1. Update order with customer details (simulate success)
+                // (You can uncomment the below if you want to update backend)
+                // await fetch(`${API_URL}/orders/${currentOrder.orderId}/details`, {
+                //     method: 'PUT',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(userDetails)
+                // });
+                // 2. Simulate payment processing
+                orderContainer.innerHTML += `<p id='payment-status-msg' style='margin-top:20px;color:#888;'>Processing payment, please wait...</p>`;
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                // 3. Mark order as confirmed
+                currentOrder.status = 'Confirmed';
+                localStorage.setItem('lastOrder', JSON.stringify(currentOrder));
+                renderOrder(currentOrder);
+            } catch (error) {
+                alert('Could not process payment. Please try again.');
+            }
+        }
+
+        // Remove Razorpay handler and verification functions
+        // async function verifyPayment(paymentResponse) {
+        //     try {
+        //         const response = await fetch(`${API_URL}/payments/verify`, {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({
+        //                 razorpay_payment_id: paymentResponse.razorpay_payment_id,
+        //                 razorpay_order_id: paymentResponse.razorpay_order_id,
+        //                 razorpay_signature: paymentResponse.razorpay_signature,
+        //                 order_id: currentOrder.orderId
+        //             })
+        //         });
+
+        //         if (!response.ok) throw new Error('Payment verification failed.');
+
+        //         const result = await response.json();
+        //         alert(result.message);
+                
+        //         // Update local storage and UI
+        //         currentOrder.status = 'Confirmed';
+        //         localStorage.setItem('lastOrder', JSON.stringify(currentOrder));
+        //         renderOrder(currentOrder);
+
+        //     } catch (error) {
+        //         console.error('Verification Error:', error);
+        //         alert('Payment verification failed. Please contact support.');
+        //     }
+        // }
 
         document.addEventListener('DOMContentLoaded', () => {
             const orderDetailsString = localStorage.getItem('lastOrder');
-            
             if (orderDetailsString) {
                 const order = JSON.parse(orderDetailsString);
-                updateUI(order);
-            } else {
-                document.querySelector('.container').innerHTML = `
-                    <div class="header">
-                        <div class="logo">Hungryyy</div>
-                    </div>
-                    <h2 class="thank-you-message">No order found.</h2>
-                    <a href="menu.html" class="back-to-menu-button">Start a New Order</a>
-                `;
-            }
-        });
-
-        // Add an event listener to listen for changes in localStorage from other tabs/windows
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'lastOrder' && e.newValue) {
-                const updatedOrder = JSON.parse(e.newValue);
-                const oldOrder = JSON.parse(e.oldValue);
-
-                // Check if the status has just changed to "Confirmed"
-                if (updatedOrder.status === 'Confirmed' && oldOrder.status !== 'Confirmed') {
-                    // Play confirmation sound
-                    confirmationSound.play().catch(error => {
-                        console.error('Failed to play audio:', error);
-                    });
-
-                    // Add animation class to the icon
-                    statusIcon.classList.add('confirmed-icon-animation');
-                    
-                    // Remove the animation class after a short duration
-                    setTimeout(() => {
-                        statusIcon.classList.remove('confirmed-icon-animation');
-                    }, 1500); // 1.5 seconds, matches the CSS animation duration
+                renderOrder(order);
+                
+                // Start periodic status checking if order exists
+                if (order && order.orderId) {
+                    // Check status every 10 seconds
+                    setInterval(updateOrderStatusFromBackend, 10000);
+                    // Also check immediately
+                    updateOrderStatusFromBackend();
                 }
-
-                updateUI(updatedOrder);
-            }
-        });
-
-        // Event listener for the Update button
-        updateButton.addEventListener('click', () => {
-            if (currentOrder.status === 'Pending Confirmation') {
-                window.location.href = 'menu.html';
             } else {
-                // If the order is confirmed, create a new "Update Order" to be sent to the admin
-                const updateOrder = {
-                    ...currentOrder,
-                    status: 'Updated Order',
-                    originalOrderNumber: currentOrder.orderNumber,
-                    orderNumber: Math.floor(Math.random() * 10000000),
-                };
-                localStorage.setItem('newOrder', JSON.stringify(updateOrder));
-                alert('Your request to update the order has been sent to the kitchen. Please wait for confirmation.');
+                renderOrder(null);
             }
         });
 
-        // Event listener for the Cancel button
-        cancelButton.addEventListener('click', () => {
-            const confirmCancel = window.confirm("Are you sure you want to cancel this order? This action cannot be undone.");
-            if (confirmCancel) {
-                localStorage.removeItem('lastOrder');
-                // Redirect back to the menu page, which will now show the "start a new order" message
-                window.location.href = 'menu.html';
+        userDetailsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userDetails = {
+                customer_name: document.getElementById('customer-name').value,
+                customer_phone: document.getElementById('customer-phone').value,
+                customer_email: document.getElementById('customer-email').value,
+            };
+            userDetailsModal.classList.remove('show');
+            startPayment(userDetails);
+        });
+
+        // Close modal if clicked outside
+        userDetailsModal.addEventListener('click', (e) => {
+            if (e.target === userDetailsModal) {
+                userDetailsModal.classList.remove('show');
             }
         });
+
     </script>
 </body>
 </html>

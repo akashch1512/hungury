@@ -223,8 +223,8 @@
 
         .order-card.pending-confirmation { border-left-color: var(--warning-color); }
         .order-card.confirmed { border-left-color: var(--success-color); }
-        .order-card.denied { border-left-color: var(--danger-color); }
-        .order-card.completed { border-left-color: var(--secondary-color); }
+        .order-card.delivered { border-left-color: var(--secondary-color); }
+        .order-card.cancelled { border-left-color: var(--danger-color); }
 
 
         .order-card h3 {
@@ -243,12 +243,9 @@
             font-weight: 400;
         }
 
-        .order-card .table-number {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: 600;
+        .order-card .customer-name {
+            font-weight: 500;
+            margin-bottom: 10px;
         }
         
         .status-badge {
@@ -262,9 +259,8 @@
 
         .status-badge.pending-confirmation { background-color: var(--warning-color); }
         .status-badge.confirmed { background-color: var(--success-color); }
-        .status-badge.denied { background-color: var(--danger-color); }
-        .status-badge.completed { background-color: var(--secondary-color); }
-        .status-badge.updated-order { background-color: var(--accent-color); }
+        .status-badge.delivered { background-color: var(--secondary-color); }
+        .status-badge.cancelled { background-color: var(--danger-color); }
 
         .order-items {
             list-style: none;
@@ -313,24 +309,14 @@
             background-color: var(--success-color);
             color: white;
         }
-        
-        .confirm-update-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
 
-        .deny-btn {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .complete-btn {
+        .deliver-btn {
             background-color: var(--secondary-color);
             color: white;
         }
         
-        .remove-btn {
-            background-color: #bbb;
+        .cancel-btn {
+            background-color: var(--danger-color);
             color: white;
         }
 
@@ -338,20 +324,12 @@
             background-color: #008c3e;
             transform: translateY(-2px);
         }
-        .confirm-update-btn:hover {
-            background-color: #da5926;
-            transform: translateY(-2px);
-        }
-        .deny-btn:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px);
-        }
-        .complete-btn:hover {
+        .deliver-btn:hover {
             background-color: #00857a;
             transform: translateY(-2px);
         }
-        .remove-btn:hover {
-            background-color: #999;
+        .cancel-btn:hover {
+            background-color: #c0392b;
             transform: translateY(-2px);
         }
 
@@ -383,10 +361,7 @@
                     <div class="dropdown-content">
                         <a href="admin.html">Dashboard</a>
                         <a href="menu_management.html">Manage Menu</a>
-                        <a href="addon_management.html">Add-on Management</a>
                         <a href="report.html">View Reports</a>
-                        <a href="#">Manage Staff</a>
-                        <a href="#">Settings</a>
                     </div>
                 </div>
                 <div class="header-title-section">
@@ -404,209 +379,153 @@
 
         <div class="order-section">
             <h2 class="section-title">Pending Orders</h2>
-            <div class="orders-grid" id="pending-orders-list">
-                </div>
+            <div class="orders-grid" id="pending-orders-list"></div>
         </div>
 
         <div class="order-section">
             <h2 class="section-title">Confirmed Orders</h2>
-            <div class="orders-grid" id="confirmed-orders-list">
-                </div>
+            <div class="orders-grid" id="confirmed-orders-list"></div>
         </div>
 
         <div class="order-section">
-            <h2 class="section-title">Completed Orders</h2>
-            <div class="orders-grid" id="completed-orders-list">
-                </div>
+            <h2 class="section-title">Completed & Cancelled Orders</h2>
+            <div class="orders-grid" id="completed-orders-list"></div>
         </div>
     </div>
     
     <audio id="new-order-sound" src="../sound/hotel-bell-ding-1-174457.mp3" preload="auto"></audio>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let orders = JSON.parse(localStorage.getItem('allOrders')) || [];
-            const newOrderSound = document.getElementById('new-order-sound');
+        const API_URL = 'https://backend-hungryy.onrender.com/api';
 
-            function renderOrders() {
-                // Clear all sections first
-                const pendingOrdersList = document.getElementById('pending-orders-list');
-                const confirmedOrdersList = document.getElementById('confirmed-orders-list');
-                const completedOrdersList = document.getElementById('completed-orders-list');
-
-                pendingOrdersList.innerHTML = '';
-                confirmedOrdersList.innerHTML = '';
-                completedOrdersList.innerHTML = '';
-
-                const pendingOrders = orders.filter(o => o.status === 'Pending Confirmation' || o.status === 'Updated Order');
-                const confirmedOrders = orders.filter(o => o.status === 'Confirmed');
-                const completedOrders = orders.filter(o => o.status === 'Completed' || o.status === 'Denied');
-
-                // Render Pending Orders
-                if (pendingOrders.length === 0) {
-                    pendingOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-utensils"></i><h3>No pending orders.</h3></div>`;
-                } else {
-                    pendingOrders.forEach(order => {
-                        const orderCard = createOrderCard(order);
-                        pendingOrdersList.appendChild(orderCard);
-                    });
+        async function fetchOrders() {
+            try {
+                const response = await fetch(`${API_URL}/admin/orders`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
                 }
+                const orders = await response.json();
+                renderOrders(orders);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                document.getElementById('pending-orders-list').innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><h3>Failed to load orders.</h3></div>`;
+            }
+        }
 
-                // Render Confirmed Orders
-                if (confirmedOrders.length === 0) {
-                    confirmedOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle"></i><h3>No confirmed orders.</h3></div>`;
-                } else {
-                    confirmedOrders.forEach(order => {
-                        const orderCard = createOrderCard(order);
-                        confirmedOrdersList.appendChild(orderCard);
-                    });
-                }
+        function renderOrders(orders) {
+            const pendingOrdersList = document.getElementById('pending-orders-list');
+            const confirmedOrdersList = document.getElementById('confirmed-orders-list');
+            const completedOrdersList = document.getElementById('completed-orders-list');
 
-                // Render Completed Orders
-                if (completedOrders.length === 0) {
-                    completedOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-history"></i><h3>No completed orders.</h3></div>`;
-                } else {
-                    completedOrders.forEach(order => {
-                        const orderCard = createOrderCard(order);
-                        completedOrdersList.appendChild(orderCard);
-                    });
-                }
+            pendingOrdersList.innerHTML = '';
+            confirmedOrdersList.innerHTML = '';
+            completedOrdersList.innerHTML = '';
+
+            const pendingOrders = orders.filter(o => o.status === 'Pending Confirmation');
+            const confirmedOrders = orders.filter(o => o.status === 'Confirmed');
+            const completedOrders = orders.filter(o => o.status === 'Delivered' || o.status === 'Cancelled');
+
+            // Render Pending Orders
+            if (pendingOrders.length === 0) {
+                pendingOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-utensils"></i><h3>No pending orders.</h3></div>`;
+            } else {
+                pendingOrders.forEach(order => {
+                    const orderCard = createOrderCard(order);
+                    pendingOrdersList.appendChild(orderCard);
+                });
             }
 
-            function createOrderCard(order) {
-                const statusClass = order.status.toLowerCase().replace(/ /g, '-');
-                const orderCard = document.createElement('div');
-                orderCard.classList.add('order-card', statusClass);
-                orderCard.dataset.orderId = order.orderNumber;
-                
-                const orderItemsHtml = Object.keys(order.items).map(itemName => {
-                    const item = order.items[itemName];
-                    return `<li><span>${itemName} (x${item.quantity})</span><span>₹${(item.price * item.quantity).toFixed(2)}</span></li>`;
-                }).join('');
+            // Render Confirmed Orders
+            if (confirmedOrders.length === 0) {
+                confirmedOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle"></i><h3>No confirmed orders.</h3></div>`;
+            } else {
+                confirmedOrders.forEach(order => {
+                    const orderCard = createOrderCard(order);
+                    confirmedOrdersList.appendChild(orderCard);
+                });
+            }
 
-                let actionButtons = '';
-                if (order.status === 'Pending Confirmation') {
-                    actionButtons = `
-                        <button class="action-btn confirm-btn" data-order-id="${order.orderNumber}" data-action="confirm">Confirm</button>
-                        <button class="action-btn deny-btn" data-order-id="${order.orderNumber}" data-action="deny">Deny</button>
-                    `;
-                } else if (order.status === 'Updated Order') {
-                     actionButtons = `
-                        <button class="action-btn confirm-update-btn" data-order-id="${order.orderNumber}" data-original-id="${order.originalOrderNumber}" data-action="confirm-update">Confirm Update</button>
-                        <button class="action-btn deny-btn" data-order-id="${order.orderNumber}" data-action="deny">Deny Update</button>
-                    `;
-                } else if (order.status === 'Confirmed') {
-                    actionButtons = `
-                        <button class="action-btn complete-btn" data-order-id="${order.orderNumber}" data-action="complete">Mark as Complete</button>
-                    `;
-                } else if (order.status === 'Denied' || order.status === 'Completed') {
-                    actionButtons = `
-                        <button class="action-btn remove-btn" data-order-id="${order.orderNumber}" data-action="remove">Remove</button>
-                    `;
-                }
+            // Render Completed Orders
+            if (completedOrders.length === 0) {
+                completedOrdersList.innerHTML = `<div class="empty-state"><i class="fas fa-history"></i><h3>No completed or cancelled orders.</h3></div>`;
+            } else {
+                completedOrders.forEach(order => {
+                    const orderCard = createOrderCard(order);
+                    completedOrdersList.appendChild(orderCard);
+                });
+            }
+        }
 
-                orderCard.innerHTML = `
-                    <h3>
-                        Order #${order.orderNumber}
-                        <span class="table-number">Table ${order.tableNumber}</span>
-                    </h3>
-                    <p>Status: <span class="status-badge ${statusClass}">${order.status}</span></p>
-                    <ul class="order-items">${orderItemsHtml}</ul>
-                    <div class="order-total">
-                        <span>Total:</span>
-                        <span>₹${order.totalPrice.toFixed(2)}</span>
-                    </div>
-                    <div class="order-actions">${actionButtons}</div>
+        function createOrderCard(order) {
+            const statusClass = order.status.toLowerCase().replace(/ /g, '-');
+            const orderCard = document.createElement('div');
+            orderCard.classList.add('order-card', statusClass);
+            orderCard.dataset.orderId = order.id;
+            
+            const orderItemsHtml = order.order_items.map(item => {
+                return `<li><span>${item.menu_item_name} (x${item.quantity})</span><span>₹${(item.price * item.quantity).toFixed(2)}</span></li>`;
+            }).join('');
+
+            let actionButtons = '';
+            if (order.status === 'Pending Confirmation') {
+                actionButtons = `
+                    <button class="action-btn confirm-btn" data-order-id="${order.id}" data-action="Confirmed">Confirm</button>
+                    <button class="action-btn cancel-btn" data-order-id="${order.id}" data-action="Cancelled">Cancel</button>
                 `;
-                return orderCard;
+            } else if (order.status === 'Confirmed') {
+                actionButtons = `
+                    <button class="action-btn deliver-btn" data-order-id="${order.id}" data-action="Delivered">Mark as Delivered</button>
+                `;
             }
 
-            function updateOrder(orderId, newStatus, isUpdate = false, originalId = null) {
-                const orderIndex = orders.findIndex(o => o.orderNumber === orderId);
-                if (orderIndex !== -1) {
-                    // Update the status of the new order
-                    orders[orderIndex].status = newStatus;
+            orderCard.innerHTML = `
+                <h3>
+                    Order #${order.id}
+                </h3>
+                <p class="customer-name">Customer: ${order.customer_name}</p>
+                <p>Status: <span class="status-badge ${statusClass}">${order.status}</span></p>
+                <ul class="order-items">${orderItemsHtml}</ul>
+                <div class="order-total">
+                    <span>Total:</span>
+                    <span>₹${order.total_price.toFixed(2)}</span>
+                </div>
+                <div class="order-actions">${actionButtons}</div>
+            `;
+            return orderCard;
+        }
 
-                    if (isUpdate && newStatus === 'Confirmed') {
-                        // Find the old order and update it with the new details
-                        const originalOrderIndex = orders.findIndex(o => o.orderNumber === originalId);
-                        if (originalOrderIndex !== -1) {
-                            orders[originalOrderIndex].items = orders[orderIndex].items;
-                            orders[originalOrderIndex].totalPrice = orders[orderIndex].totalPrice;
-                            orders[originalOrderIndex].status = 'Confirmed';
-                        }
-                        // Remove the new updated order from the list
-                        orders.splice(orderIndex, 1);
-                    }
-                    
-                    localStorage.setItem('allOrders', JSON.stringify(orders));
-
-                    // Update the status of the specific order for the customer page
-                    const lastOrder = JSON.parse(localStorage.getItem('lastOrder'));
-                    if (lastOrder && lastOrder.orderNumber === orderId) {
-                        lastOrder.status = newStatus;
-                        localStorage.setItem('lastOrder', JSON.stringify(lastOrder));
-                    }
-                    
-                    renderOrders();
+        async function updateOrderStatus(orderId, newStatus) {
+            try {
+                const response = await fetch(`${API_URL}/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to update order status');
                 }
+                const result = await response.json();
+                alert(result.message);
+                fetchOrders(); // Refresh the orders list
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                alert('Failed to update order status. Please try again.');
             }
-            
-            function removeOrder(orderId) {
-                orders = orders.filter(o => o.orderNumber !== orderId);
-                localStorage.setItem('allOrders', JSON.stringify(orders));
-                renderOrders();
+        }
+
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('.action-btn');
+            if (target) {
+                const orderId = parseInt(target.dataset.orderId);
+                const action = target.dataset.action;
+                updateOrderStatus(orderId, action);
             }
+        });
 
-            document.addEventListener('click', (e) => {
-                const target = e.target.closest('.action-btn');
-                if (target) {
-                    const orderId = parseInt(target.dataset.orderId);
-                    const action = target.dataset.action;
-
-                    if (action === 'confirm') {
-                        updateOrder(orderId, 'Confirmed');
-                        alert(`Order #${orderId} has been confirmed.`);
-                    } else if (action === 'confirm-update') {
-                        const originalId = parseInt(target.dataset.originalId);
-                        updateOrder(orderId, 'Confirmed', true, originalId);
-                        alert(`Order #${originalId} has been updated.`);
-                    } else if (action === 'deny') {
-                        updateOrder(orderId, 'Denied');
-                        alert(`Order #${orderId} has been denied.`);
-                    } else if (action === 'complete') {
-                        updateOrder(orderId, 'Completed');
-                        alert(`Order #${orderId} has been marked as complete.`);
-                    } else if (action === 'remove') {
-                        removeOrder(orderId);
-                        alert(`Order #${orderId} has been removed.`);
-                    }
-                }
-            });
-            
-            renderOrders();
-
-            // Event listener to automatically add a new order when placed from another page
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'lastOrder') {
-                    const newOrder = JSON.parse(e.newValue);
-                    if (newOrder) {
-                        // Check if the order already exists to prevent duplicates
-                        const exists = orders.some(o => o.orderNumber === newOrder.orderNumber);
-                        if (!exists) {
-                            // Add a timestamp for reporting purposes
-                            newOrder.timestamp = new Date().toISOString();
-                            orders.push(newOrder);
-                            localStorage.setItem('allOrders', JSON.stringify(orders));
-                            renderOrders();
-                            // Play the notification sound for a new order
-                            newOrderSound.play().catch(error => {
-                                console.error('Failed to play audio:', error);
-                            });
-                        }
-                    }
-                }
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchOrders();
+            // Poll for new orders every 15 seconds
+            setInterval(fetchOrders, 15000);
         });
 
         // Dropdown toggle functionality

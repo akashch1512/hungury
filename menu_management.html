@@ -28,268 +28,60 @@
             --veg-color: #00B14F;
             --nonveg-color: #E74C3C;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .header-title-section {
-            flex: 1;
-            text-align: center;
-            min-width: 250px;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            display: block;
-        }
-        
-        .logo-text {
-            position: relative;
-            display: inline-block;
-        }
-
-        .smile-curve {
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 25px;
-            height: 15px;
-            border: 3px solid var(--primary-color);
-            border-top-color: transparent;
-            border-radius: 0 0 50px 50px;
-        }
-
-        .dashboard-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-top: 10px;
-            color: var(--dark-color);
-        }
-        
-        .action-button {
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            box-shadow: var(--shadow-md);
-        }
-
-        .action-button:hover {
-            background-color: #00857a;
-            transform: translateY(-2px);
-        }
-
-        .save-button {
-            background-color: var(--success-color);
-        }
-
-        .save-button:hover {
-            background-color: #008c3e;
-        }
-        
-        .back-button {
-            background-color: var(--dark-color);
-        }
-        
-        .back-button:hover {
-            background-color: #484848;
-        }
-        
-        .menu-management-section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--text-light);
-        }
-        
-        .category {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-md);
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .category-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .category-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
-        }
-        
-        .menu-items-list {
-            list-style: none;
-        }
-        
-        .menu-item-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
-        }
-        
-        .menu-item-card:last-child {
-            border-bottom: none;
-        }
-        
-        .menu-item-card:hover {
-            background-color: #fafafa;
-        }
-        
-        .item-info {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .item-status-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 15px;
-            transition: transform 0.3s ease;
-        }
-        
-        .item-status-icon.available {
-            background-color: var(--success-color);
-        }
-        
-        .item-status-icon.unavailable {
-            background-color: var(--danger-color);
-        }
-
-        .item-name {
-            font-weight: 500;
-        }
-        
-        .item-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .veg-indicator {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: white;
-        }
-
-        .veg-indicator.veg { 
-            background-color: var(--veg-color);
-        }
-        .veg-indicator.non-veg { 
-            background-color: var(--nonveg-color);
-        }
-
-        .toggle-switch-container {
-            display: inline-block;
-            position: relative;
-            width: 60px;
-            height: 34px;
-        }
-        
-        .toggle-switch-container input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: var(--success-color);
-        }
-        
-        input:focus + .slider {
-            box-shadow: 0 0 1px var(--success-color);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--light-color); color: var(--text-color); line-height: 1.6; padding: 20px; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; padding: 20px 0; border-bottom: 2px solid var(--primary-color); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .header-title-section { flex: 1; text-align: center; min-width: 250px; }
+        .logo { font-size: 2.5rem; font-weight: 800; color: var(--primary-color); display: block; }
+        .logo-text { position: relative; display: inline-block; }
+        .smile-curve { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 25px; height: 15px; border: 3px solid var(--primary-color); border-top-color: transparent; border-radius: 0 0 50px 50px; }
+        .dashboard-title { font-size: 1.8rem; font-weight: 700; margin-top: 10px; color: var(--dark-color); }
+        .action-button { padding: 10px 20px; color: white; border: none; border-radius: 50px; font-weight: 600; text-decoration: none; transition: var(--transition); box-shadow: var(--shadow-md); cursor: pointer; }
+        .action-button:hover { transform: translateY(-2px); }
+        .add-item-btn { background-color: var(--success-color); }
+        .add-item-btn:hover { background-color: #008c3e; }
+        .back-button { background-color: var(--dark-color); }
+        .back-button:hover { background-color: #484848; }
+        .menu-management-section { margin-bottom: 40px; }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: var(--dark-color); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--text-light); }
+        .category { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow-md); margin-bottom: 25px; overflow: hidden; }
+        .category-header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .category-title { font-size: 1.3rem; font-weight: 700; margin: 0; }
+        .menu-items-list { list-style: none; }
+        .menu-item-card { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background-color 0.3s ease; }
+        .menu-item-card:last-child { border-bottom: none; }
+        .item-info { display: flex; align-items: center; gap: 15px; }
+        .item-status-icon { width: 12px; height: 12px; border-radius: 50%; }
+        .item-status-icon.available { background-color: var(--success-color); }
+        .item-status-icon.unavailable { background-color: var(--danger-color); }
+        .item-name { font-weight: 500; }
+        .item-controls { display: flex; align-items: center; gap: 15px; }
+        .item-price { font-weight: 600; color: var(--dark-color); }
+        .edit-btn, .delete-btn { background: none; border: none; cursor: pointer; font-size: 1rem; transition: color 0.3s ease; }
+        .edit-btn { color: var(--secondary-color); }
+        .delete-btn { color: var(--danger-color); }
+        .edit-btn:hover { color: #007a70; }
+        .delete-btn:hover { color: #c0392b; }
+        .toggle-switch-container { display: inline-block; position: relative; width: 50px; height: 28px; }
+        .toggle-switch-container input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--success-color); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-overlay.show .modal-content { transform: scale(1); }
+        .modal-content h3 { margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Poppins', sans-serif; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .modal-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
     </style>
 </head>
 <body>
@@ -298,161 +90,239 @@
             <div class="header-content">
                 <a href="admin.html" class="action-button back-button">Back to Dashboard</a>
                 <div class="header-title-section">
-                    <h1 class="logo">
-                        h
-                        <span class="logo-text">
-                            <div class="smile-curve"></div>
-                        </span>
-                        ungryy
-                    </h1>
+                    <h1 class="logo">h<span class="logo-text"><div class="smile-curve"></div></span>ungryy</h1>
                     <p class="dashboard-title">Menu Management</p>
                 </div>
-                <button id="saveChangesButton" class="action-button save-button">Save Changes</button>
+                <button id="addItemBtn" class="action-button add-item-btn">Add New Item</button>
             </div>
         </div>
-
         <div class="menu-management-section">
-            <h2 class="section-title">Toggle Item Availability</h2>
-            <div id="menu-management-content">
+            <div id="menu-management-content"></div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Item Modal -->
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Add New Menu Item</h3>
+            <form id="itemForm">
+                <input type="hidden" id="itemId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemPrice">Price (₹)</label>
+                        <input type="number" id="itemPrice" step="0.01" required>
+                    </div>
                 </div>
+                <div class="form-group full-width">
+                    <label for="itemDescription">Description</label>
+                    <textarea id="itemDescription"></textarea>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="itemCategory">Category</label>
+                        <input type="text" id="itemCategory" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemImageUrl">Image URL</label>
+                        <input type="url" id="itemImageUrl">
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="isVeg">Type</label>
+                    <select id="isVeg">
+                        <option value="true">Vegetarian</option>
+                        <option value="false">Non-Vegetarian</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancelBtn" class="action-button back-button">Cancel</button>
+                    <button type="submit" class="action-button add-item-btn">Save Item</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // Main Menu Data
-        const menuDataDefault = [
-            { "name": "French Fries Salty", "price": 70.00, "category": "Veg Starters", "isVeg": true, "desc": "Crispy golden fries with a sprinkle of salt", "isAvailable": true },
-            { "name": "Peri Peri Fries", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy peri peri flavored fries with a kick", "isAvailable": true },
-            { "name": "Plain Maggi", "price": 60.00, "category": "Veg Starters", "isVeg": true, "desc": "Classic maggi noodles with basic seasoning", "isAvailable": true },
-            { "name": "Masala Maggi", "price": 80.00, "category": "Veg Starters", "isVeg": true, "desc": "Maggi with special Indian spices", "isAvailable": true },
-            { "name": "Masala Maggi with Cheese", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy maggi topped with melted cheese", "isAvailable": true },
-            { "name": "Salty Fries with Cheese Dip", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Classic fries served with creamy cheese dip", "isAvailable": true },
-            { "name": "Peri Peri Fries with Cheese Dip", "price": 130.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy peri peri fries with cheese dip", "isAvailable": true },
-            { "name": "Paneer Kurkure (6 pcs)", "price": 90.00, "category": "Paneer Momos", "isVeg": true, "desc": "Crispy fried paneer momos with special spices", "isAvailable": true },
-            { "name": "Paneer Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Paneer Momos", "isVeg": true, "desc": "Rich Afghani style paneer momos with cheese", "isAvailable": true },
-            { "name": "Paneer Cheese Chilly (6 pcs)", "price": 120.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Paneer Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Paneer Fry (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Deep fried paneer momos with mild spices", "isAvailable": true },
-            { "name": "Paneer Steam (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Healthy steamed paneer momos", "isAvailable": true },
-            { "name": "Paneer Tandoor (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos cooked in clay oven", "isAvailable": true },
-            { "name": "Cheese Dip", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Creamy cheese dipping sauce", "isAvailable": true },
-            { "name": "Extra Cheese", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Additional cheese topping", "isAvailable": true },
-            { "name": "Peri Peri Masala", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Spicy peri peri seasoning", "isAvailable": true },
-            { "name": "Chicken Kurkure (6 pcs)", "price": 90.00, "category": "Chicken Momos", "isVeg": false, "desc": "Crispy fried chicken momos", "isAvailable": true },
-            { "name": "Chicken Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Chicken Momos", "isVeg": false, "desc": "Rich Afghani style chicken momos with cheese", "isAvailable": true },
-            { "name": "Chicken Cheese Chilly (6 pcs)", "price": 120.00, "category": "Chicken Momos", "isVeg": false, "desc": "Chicken momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Chicken Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Chicken Momos", "isVeg": false, "desc": "Chicken momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Chicken Fry (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Deep fried chicken momos with mild spices", "isAvailable": true },
-            { "name": "Chicken Steam (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Healthy steamed chicken momos", "isAvailable": true },
-            { "name": "Chicken Tandoor (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Classic tandoori chicken momos", "isAvailable": true },
-            { "name": "Mix Veg Kurkure (6 pcs)", "price": 90.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Crispy fried mixed vegetable momos", "isAvailable": true },
-            { "name": "Mix Veg Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Rich Afghani style veg momos with cheese", "isAvailable": true },
-            { "name": "Mix Veg Cheese Chilly (6 pcs)", "price": 120.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Mix Veg Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Mix Veg Fry (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Deep fried mixed vegetable momos", "isAvailable": true },
-            { "name": "Mix Veg Tandoor (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos cooked in clay oven", "isAvailable": true },
-            { "name": "Mix Veg Steam (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Healthy steamed mixed vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Kurkure (6 pcs)", "price": 90.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Crispy fried corn and vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Rich Afghani style corn momos with cheese", "isAvailable": true },
-            { "name": "Veg Corn Cheese Chilly (6 pcs)", "price": 120.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Veg Corn Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Veg Corn Fry (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Deep fried corn and vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Steam (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Healthy steamed corn momos", "isAvailable": true },
-            { "name": "Veg Corn Tandoor (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos cooked in clay oven", "isAvailable": true },
-            { "name": "Oreo Shake", "price": 120.00, "category": "Milk Shakes", "isVeg": true, "desc": "Creamy milkshake with Oreo cookies", "isAvailable": true },
-            { "name": "Kit Kat Shake", "price": 120.00, "category": "Milk Shakes", "isVeg": true, "desc": "Delicious milkshake with Kit Kat chunks", "isAvailable": true },
-            { "name": "Cold Coffee with Chocolate", "price": 100.00, "category": "Milk Shakes", "isVeg": true, "desc": "Iced coffee blended with chocolate syrup", "isAvailable": true },
-            { "name": "Pineapple Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Refreshing pineapple flavored milkshake", "isAvailable": true },
-            { "name": "Strawberry Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Sweet strawberry milkshake", "isAvailable": true },
-            { "name": "Mango Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Classic mango milkshake", "isAvailable": true },
-            { "name": "Chocolate Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Rich chocolate milkshake", "isAvailable": true },
-            { "name": "Blueberry Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Antioxidant-rich blueberry milkshake", "isAvailable": true },
-            { "name": "Black Currant Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Tangy black currant flavored milkshake", "isAvailable": true },
-            { "name": "Butter Scotch Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Creamy butterscotch flavored milkshake", "isAvailable": true },
-            { "name": "Cold Coffee", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Classic iced coffee", "isAvailable": true },
-            { "name": "Chicken Nuggets (6 pcs)", "price": 80.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Crispy fried chicken nuggets", "isAvailable": true },
-            { "name": "Chicken Zinger Strips (5 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Spicy chicken strips with crispy coating", "isAvailable": true },
-            { "name": "Chicken Popcorn (15 pcs)", "price": 110.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Bite-sized crispy chicken popcorn", "isAvailable": true },
-            { "name": "Chicken Cheese Balls (5 pcs)", "price": 100.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Cheesy chicken balls with crispy coating", "isAvailable": true },
-            { "name": "Chicken Reshmi Kabab (2 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Soft and juicy chicken kababs", "isAvailable": true },
-            { "name": "Chicken Tandoori Kabab (2 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Classic tandoori chicken kababs", "isAvailable": true }
-        ];
-
-        let menuData = JSON.parse(localStorage.getItem('menuData')) || menuDataDefault;
-
+        const API_URL = 'https://backend-hungryy.onrender.com/api';
         const menuManagementContent = document.getElementById('menu-management-content');
-        const saveChangesButton = document.getElementById('saveChangesButton');
+        const modal = document.getElementById('itemModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const itemForm = document.getElementById('itemForm');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const addItemBtn = document.getElementById('addItemBtn');
+
+        let menuData = [];
+
+        async function fetchMenu() {
+            try {
+                const response = await fetch(`${API_URL}/admin/menu`);
+                if (!response.ok) throw new Error('Failed to fetch menu.');
+                menuData = await response.json();
+                renderMenuForManagement();
+            } catch (error) {
+                console.error('Fetch Menu Error:', error);
+                menuManagementContent.innerHTML = `<p>Error loading menu. Please try again.</p>`;
+            }
+        }
 
         function renderMenuForManagement() {
-            const categories = [...new Set(menuData.map(item => item.category))];
-            
+            const itemsByCategory = menuData.reduce((acc, item) => {
+                (acc[item.category] = acc[item.category] || []).push(item);
+                return acc;
+            }, {});
+
             let html = '';
-            categories.forEach(category => {
+            for (const category in itemsByCategory) {
                 html += `
                     <div class="category">
-                        <div class="category-header">
-                            <h2 class="category-title">${category}</h2>
-                        </div>
+                        <div class="category-header"><h2 class="category-title">${category}</h2></div>
                         <ul class="menu-items-list">
-                            ${menuData.filter(item => item.category === category).map(item => renderMenuItem(item)).join('')}
+                            ${itemsByCategory[category].map(item => renderMenuItem(item)).join('')}
                         </ul>
                     </div>
                 `;
-            });
-
+            }
             menuManagementContent.innerHTML = html;
+            attachItemListeners();
         }
 
         function renderMenuItem(item) {
-            const isChecked = item.isAvailable ? 'checked' : '';
-            const vegClass = item.isVeg ? 'veg' : 'non-veg';
-            const vegIcon = item.isVeg ? '<i class="fas fa-leaf"></i>' : '<i class="fas fa-drumstick-bite"></i>';
-            const statusClass = item.isAvailable ? 'available' : 'unavailable';
-
+            const statusClass = item.is_available ? 'available' : 'unavailable';
             return `
-                <li class="menu-item-card" data-item-name="${item.name}">
+                <li class="menu-item-card" data-item-id="${item.id}">
                     <div class="item-info">
                         <span class="item-status-icon ${statusClass}"></span>
                         <span class="item-name">${item.name}</span>
                     </div>
-                    <div class="item-meta">
-                        <span class="veg-indicator ${vegClass}" title="${item.isVeg ? 'Vegetarian' : 'Non-Vegetarian'}">${vegIcon}</span>
+                    <div class="item-controls">
+                        <span class="item-price">₹${item.price.toFixed(2)}</span>
                         <label class="toggle-switch-container">
-                            <input type="checkbox" ${isChecked}>
+                            <input type="checkbox" class="availability-toggle" ${item.is_available ? 'checked' : ''}>
                             <span class="slider"></span>
                         </label>
+                        <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </li>
             `;
         }
 
-        function saveMenuChanges() {
-            // Read the current state of the toggles
-            const itemCards = document.querySelectorAll('.menu-item-card');
-            itemCards.forEach(card => {
-                const itemName = card.dataset.itemName;
-                const isChecked = card.querySelector('input[type="checkbox"]').checked;
-                
-                // Update the menuData array in memory
-                const itemToUpdate = menuData.find(item => item.name === itemName);
-                if (itemToUpdate) {
-                    itemToUpdate.isAvailable = isChecked;
-                }
-            });
-
-            // Save the updated menuData to localStorage
-            localStorage.setItem('menuData', JSON.stringify(menuData));
-            alert('Menu changes saved successfully!');
-            // Re-render to show the updated status icons immediately
-            renderMenuForManagement();
+        function openModal(item = null) {
+            itemForm.reset();
+            if (item) {
+                modalTitle.textContent = 'Edit Menu Item';
+                document.getElementById('itemId').value = item.id;
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('itemPrice').value = item.price;
+                document.getElementById('itemDescription').value = item.description;
+                document.getElementById('itemCategory').value = item.category;
+                document.getElementById('itemImageUrl').value = item.image_url;
+                document.getElementById('isVeg').value = item.is_veg;
+            } else {
+                modalTitle.textContent = 'Add New Menu Item';
+                document.getElementById('itemId').value = '';
+            }
+            modal.classList.add('show');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderMenuForManagement();
-            
-            // Add event listener to the save button
-            saveChangesButton.addEventListener('click', saveMenuChanges);
-        });
+        function closeModal() {
+            modal.classList.remove('show');
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('itemId').value;
+            const itemData = {
+                name: document.getElementById('itemName').value,
+                price: document.getElementById('itemPrice').value,
+                description: document.getElementById('itemDescription').value,
+                category: document.getElementById('itemCategory').value,
+                image_url: document.getElementById('itemImageUrl').value,
+                is_veg: document.getElementById('isVeg').value === 'true',
+                is_available: true // Default to available on add/edit
+            };
+
+            const url = id ? `${API_URL}/admin/menu/${id}` : `${API_URL}/admin/menu`;
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(itemData)
+                });
+                if (!response.ok) throw new Error(`Failed to ${id ? 'update' : 'add'} item.`);
+                await fetchMenu();
+                closeModal();
+            } catch (error) {
+                console.error('Save Item Error:', error);
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function toggleAvailability(itemId, isAvailable) {
+            try {
+                const response = await fetch(`${API_URL}/admin/menu/${itemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_available: isAvailable })
+                });
+                if (!response.ok) throw new Error('Failed to update availability.');
+                await fetchMenu(); // Refresh to show updated status
+            } catch (error) {
+                console.error('Toggle Availability Error:', error);
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function deleteItem(itemId) {
+            if (!confirm('Are you sure you want to delete this item?')) return;
+            try {
+                const response = await fetch(`${API_URL}/admin/menu/${itemId}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Failed to delete item.');
+                await fetchMenu();
+            } catch (error) {
+                console.error('Delete Item Error:', error);
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function attachItemListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const card = e.target.closest('.menu-item-card');
+                    const itemId = parseInt(card.dataset.itemId);
+                    const item = menuData.find(i => i.id === itemId);
+                    openModal(item);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const card = e.target.closest('.menu-item-card');
+                    const itemId = parseInt(card.dataset.itemId);
+                    deleteItem(itemId);
+                });
+            });
+
+            document.querySelectorAll('.availability-toggle').forEach(toggle => {
+                toggle.addEventListener('change', (e) => {
+                    const card = e.target.closest('.menu-item-card');
+                    const itemId = parseInt(card.dataset.itemId);
+                    toggleAvailability(itemId, e.target.checked);
+                });
+            });
+        }
+
+        addItemBtn.addEventListener('click', () => openModal());
+        cancelBtn.addEventListener('click', closeModal);
+        itemForm.addEventListener('submit', handleFormSubmit);
+
+        document.addEventListener('DOMContentLoaded', fetchMenu);
     </script>
 </body>
 </html>

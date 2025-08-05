@@ -688,68 +688,9 @@
     </div>
 
     <script>
-        // Main Menu Data
-        const menuDataDefault = [
-            { "name": "French Fries Salty", "price": 70.00, "category": "Veg Starters", "isVeg": true, "desc": "Crispy golden fries with a sprinkle of salt", "isAvailable": true },
-            { "name": "Peri Peri Fries", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy peri peri flavored fries with a kick", "isAvailable": true },
-            { "name": "Plain Maggi", "price": 60.00, "category": "Veg Starters", "isVeg": true, "desc": "Classic maggi noodles with basic seasoning", "isAvailable": true },
-            { "name": "Masala Maggi", "price": 80.00, "category": "Veg Starters", "isVeg": true, "desc": "Maggi with special Indian spices", "isAvailable": true },
-            { "name": "Masala Maggi with Cheese", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy maggi topped with melted cheese", "isAvailable": true },
-            { "name": "Salty Fries with Cheese Dip", "price": 100.00, "category": "Veg Starters", "isVeg": true, "desc": "Classic fries served with creamy cheese dip", "isAvailable": true },
-            { "name": "Peri Peri Fries with Cheese Dip", "price": 130.00, "category": "Veg Starters", "isVeg": true, "desc": "Spicy peri peri fries with cheese dip", "isAvailable": true },
-            { "name": "Paneer Kurkure (6 pcs)", "price": 90.00, "category": "Paneer Momos", "isVeg": true, "desc": "Crispy fried paneer momos with special spices", "isAvailable": true },
-            { "name": "Paneer Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Paneer Momos", "isVeg": true, "desc": "Rich Afghani style paneer momos with cheese", "isAvailable": true },
-            { "name": "Paneer Cheese Chilly (6 pcs)", "price": 120.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Paneer Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Paneer Fry (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Deep fried paneer momos with mild spices", "isAvailable": true },
-            { "name": "Paneer Steam (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Healthy steamed paneer momos", "isAvailable": true },
-            { "name": "Paneer Tandoor (6 pcs)", "price": 70.00, "category": "Paneer Momos", "isVeg": true, "desc": "Paneer momos cooked in clay oven", "isAvailable": true },
-            { "name": "Cheese Dip", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Creamy cheese dipping sauce", "isAvailable": true },
-            { "name": "Extra Cheese", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Additional cheese topping", "isAvailable": true },
-            { "name": "Peri Peri Masala", "price": 30.00, "category": "Add-ons", "isVeg": true, "desc": "Spicy peri peri seasoning", "isAvailable": true },
-            { "name": "Chicken Kurkure (6 pcs)", "price": 90.00, "category": "Chicken Momos", "isVeg": false, "desc": "Crispy fried chicken momos", "isAvailable": true },
-            { "name": "Chicken Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Chicken Momos", "isVeg": false, "desc": "Rich Afghani style chicken momos with cheese", "isAvailable": true },
-            { "name": "Chicken Cheese Chilly (6 pcs)", "price": 120.00, "category": "Chicken Momos", "isVeg": false, "desc": "Chicken momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Chicken Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Chicken Momos", "isVeg": false, "desc": "Chicken momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Chicken Fry (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Deep fried chicken momos with mild spices", "isAvailable": true },
-            { "name": "Chicken Steam (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Healthy steamed chicken momos", "isAvailable": true },
-            { "name": "Chicken Tandoor (6 pcs)", "price": 70.00, "category": "Chicken Momos", "isVeg": false, "desc": "Classic tandoori chicken momos", "isAvailable": true },
-            { "name": "Mix Veg Kurkure (6 pcs)", "price": 90.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Crispy fried mixed vegetable momos", "isAvailable": true },
-            { "name": "Mix Veg Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Rich Afghani style veg momos with cheese", "isAvailable": true },
-            { "name": "Mix Veg Cheese Chilly (6 pcs)", "price": 120.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Mix Veg Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Mix Veg Fry (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Deep fried mixed vegetable momos", "isAvailable": true },
-            { "name": "Mix Veg Tandoor (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Veg momos cooked in clay oven", "isAvailable": true },
-            { "name": "Mix Veg Steam (6 pcs)", "price": 60.00, "category": "Mix Veg Momos", "isVeg": true, "desc": "Healthy steamed mixed vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Kurkure (6 pcs)", "price": 90.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Crispy fried corn and vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Afghani with Cheese (6 pcs)", "price": 160.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Rich Afghani style corn momos with cheese", "isAvailable": true },
-            { "name": "Veg Corn Cheese Chilly (6 pcs)", "price": 120.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos tossed in spicy cheese sauce", "isAvailable": true },
-            { "name": "Veg Corn Pahadi Tandoor (6 pcs)", "price": 90.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos cooked in traditional tandoor", "isAvailable": true },
-            { "name": "Veg Corn Fry (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Deep fried corn and vegetable momos", "isAvailable": true },
-            { "name": "Veg Corn Steam (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Healthy steamed corn momos", "isAvailable": true },
-            { "name": "Veg Corn Tandoor (6 pcs)", "price": 70.00, "category": "Veg Corn Momos", "isVeg": true, "desc": "Corn momos cooked in clay oven", "isAvailable": true },
-            { "name": "Oreo Shake", "price": 120.00, "category": "Milk Shakes", "isVeg": true, "desc": "Creamy milkshake with Oreo cookies", "isAvailable": true },
-            { "name": "Kit Kat Shake", "price": 120.00, "category": "Milk Shakes", "isVeg": true, "desc": "Delicious milkshake with Kit Kat chunks", "isAvailable": true },
-            { "name": "Cold Coffee with Chocolate", "price": 100.00, "category": "Milk Shakes", "isVeg": true, "desc": "Iced coffee blended with chocolate syrup", "isAvailable": true },
-            { "name": "Pineapple Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Refreshing pineapple flavored milkshake", "isAvailable": true },
-            { "name": "Strawberry Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Sweet strawberry milkshake", "isAvailable": true },
-            { "name": "Mango Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Classic mango milkshake", "isAvailable": true },
-            { "name": "Chocolate Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Rich chocolate milkshake", "isAvailable": true },
-            { "name": "Blueberry Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Antioxidant-rich blueberry milkshake", "isAvailable": true },
-            { "name": "Black Currant Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Tangy black currant flavored milkshake", "isAvailable": true },
-            { "name": "Butter Scotch Shake", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Creamy butterscotch flavored milkshake", "isAvailable": true },
-            { "name": "Cold Coffee", "price": 80.00, "category": "Milk Shakes", "isVeg": true, "desc": "Classic iced coffee", "isAvailable": true },
-            { "name": "Chicken Nuggets (6 pcs)", "price": 80.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Crispy fried chicken nuggets", "isAvailable": true },
-            { "name": "Chicken Zinger Strips (5 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Spicy chicken strips with crispy coating", "isAvailable": true },
-            { "name": "Chicken Popcorn (15 pcs)", "price": 110.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Bite-sized crispy chicken popcorn", "isAvailable": true },
-            { "name": "Chicken Cheese Balls (5 pcs)", "price": 100.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Cheesy chicken balls with crispy coating", "isAvailable": true },
-            { "name": "Chicken Reshmi Kabab (2 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Soft and juicy chicken kababs", "isAvailable": true },
-            { "name": "Chicken Tandoori Kabab (2 pcs)", "price": 120.00, "category": "Non Veg Starters", "isVeg": false, "desc": "Classic tandoori chicken kababs", "isAvailable": true }
-        ];
-
-        // Retrieve menu data from local storage, or use default if none exists
-        const menuData = JSON.parse(localStorage.getItem('menuData')) || menuDataDefault;
-
+        const API_URL = 'https://backend-hungryy.onrender.com/api';
+        let menuData = {};
+        
         // App state
         const state = {
             cart: {},
@@ -771,27 +712,36 @@
         const backToMenuButton = document.getElementById('backToMenuButton');
         const notification = document.getElementById('notification');
         
-        // New elements for the floating bubbles
         const viewCartBubble = document.getElementById('viewCartBubble');
         const orderStatusBubble = document.getElementById('orderStatusBubble');
         const mainCartTotalBubble = document.getElementById('mainCartTotalBubble');
 
+        async function fetchMenu() {
+            try {
+                const response = await fetch(`${API_URL}/menu`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                menuData = await response.json();
+                renderMenu();
+                renderAddons();
+            } catch (error) {
+                console.error('Failed to fetch menu:', error);
+                menuContent.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><h3>Failed to load menu</h3><p>Please try again later.</p></div>`;
+            }
+        }
 
-        // Initial menu rendering
         function init() {
-            renderMenu();
-            renderAddons();
+            fetchMenu();
             attachEventListeners();
             updateCartUI();
             checkIfRecentOrderExists();
         }
         
-        // Checks if there's a recent order and shows the status button
         function checkIfRecentOrderExists() {
             const lastOrderString = localStorage.getItem('lastOrder');
             if (lastOrderString) {
                 const lastOrder = JSON.parse(lastOrderString);
-                // Only show the button if the order is not completed or denied
                 if (lastOrder.status !== 'Completed' && lastOrder.status !== 'Denied') {
                     orderStatusBubble.style.display = 'flex';
                 } else {
@@ -802,96 +752,85 @@
             }
         }
         
-        // Renders the main menu
         function renderMenu() {
-            // Filter out items that are not available and also the Add-ons category
-            const availableItems = menuData.filter(item => item.isAvailable);
-            const categories = [...new Set(availableItems.map(item => item.category))].filter(cat => cat !== 'Add-ons');
-            const filteredItems = availableItems.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || 
-                                      (item.desc && item.desc.toLowerCase().includes(state.searchQuery.toLowerCase()));
-                const matchesFilter = state.currentFilter === 'all' || 
-                                    (state.currentFilter === 'veg' && item.isVeg) || 
-                                    (state.currentFilter === 'nonveg' && !item.isVeg);
-                return matchesSearch && matchesFilter;
-            });
-            const itemsByCategory = filteredItems.reduce((acc, item) => {
-                if (!acc[item.category]) acc[item.category] = [];
-                acc[item.category].push(item);
-                return acc;
-            }, {});
-            
             let html = '';
-            if (Object.keys(itemsByCategory).length === 0) {
-                html = `
+            const categories = Object.keys(menuData).filter(cat => cat !== 'Add-ons');
+
+            categories.forEach(category => {
+                const items = menuData[category].filter(item => {
+                    const matchesSearch = item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || 
+                                          (item.description && item.description.toLowerCase().includes(state.searchQuery.toLowerCase()));
+                    const matchesFilter = state.currentFilter === 'all' || 
+                                        (state.currentFilter === 'veg' && item.is_veg) || 
+                                        (state.currentFilter === 'nonveg' && !item.is_veg);
+                    return matchesSearch && matchesFilter;
+                });
+
+                if (items.length > 0) {
+                    html += `
+                        <div class="category fade-in">
+                            <div class="category-header">
+                                <h2 class="category-title">${category}</h2>
+                                <i class="fas fa-chevron-down category-icon"></i>
+                            </div>
+                            <div class="menu-items">
+                                ${items.map(item => renderMenuItem(item)).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (html === '') {
+                 html = `
                     <div class="empty-state">
                         <i class="fas fa-utensils"></i>
                         <h3>No items found</h3>
                         <p>Try adjusting your search or filter</p>
                     </div>
                 `;
-            } else {
-                categories.forEach(category => {
-                    if (itemsByCategory[category]) {
-                        html += `
-                            <div class="category fade-in">
-                                <div class="category-header">
-                                    <h2 class="category-title">${category}</h2>
-                                    <i class="fas fa-chevron-down category-icon"></i>
-                                </div>
-                                <div class="menu-items">
-                                    ${itemsByCategory[category].map(item => renderMenuItem(item)).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
             }
+
             menuContent.innerHTML = html;
         }
         
-        // Renders the add-ons list
         function renderAddons() {
-            const availableAddons = menuData.filter(item => item.category === 'Add-ons' && item.isAvailable);
-            addonsMenuContent.innerHTML = `
-                <div class="menu-items">
-                    ${availableAddons.map(item => renderMenuItem(item)).join('')}
-                </div>
-            `;
+            if (menuData['Add-ons']) {
+                addonsMenuContent.innerHTML = `
+                    <div class="menu-items">
+                        ${menuData['Add-ons'].map(item => renderMenuItem(item)).join('')}
+                    </div>
+                `;
+            }
         }
         
-        // Renders the order summary
         function renderOrderSummary() {
             let html = '';
             let total = 0;
             for (const itemName in state.cart) {
                 const item = state.cart[itemName];
-                const itemInMenu = menuData.find(m => m.name === itemName);
-                if (itemInMenu) {
-                    total += item.price * item.quantity;
-                    html += `
-                        <div class="summary-item">
-                            <span class="summary-item-name">${itemName} (x${item.quantity})</span>
-                            <span class="summary-item-price">₹${(item.price * item.quantity).toFixed(2)}</span>
-                        </div>
-                    `;
-                }
+                total += item.price * item.quantity;
+                html += `
+                    <div class="summary-item">
+                        <span class="summary-item-name">${itemName} (x${item.quantity})</span>
+                        <span class="summary-item-price">₹${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
             }
             orderSummaryContent.innerHTML = html;
         }
 
-        // Renders a single menu item HTML
         function renderMenuItem(item) {
-            const vegClass = item.isVeg ? 'veg' : 'non-veg';
-            const vegIcon = item.isVeg ? '<i class="fas fa-leaf"></i>' : '<i class="fas fa-drumstick-bite"></i>';
+            const vegClass = item.is_veg ? 'veg' : 'non-veg';
+            const vegIcon = item.is_veg ? '<i class="fas fa-leaf"></i>' : '<i class="fas fa-drumstick-bite"></i>';
             const quantity = state.cart[item.name]?.quantity || 0;
             return `
                 <div class="menu-item" data-name="${item.name}">
                     <div class="item-info">
                         <h3 class="item-name">${item.name}</h3>
-                        <p class="item-desc">${item.desc}</p>
+                        <p class="item-desc">${item.description}</p>
                         <div class="item-meta">
-                            <span class="veg-indicator ${vegClass}" title="${item.isVeg ? 'Vegetarian' : 'Non-Vegetarian'}">${vegIcon}</span>
+                            <span class="veg-indicator ${vegClass}" title="${item.is_veg ? 'Vegetarian' : 'Non-Vegetarian'}">${vegIcon}</span>
                         </div>
                     </div>
                     <div class="quantity-controls">
@@ -904,7 +843,6 @@
             `;
         }
 
-        // Updates the cart state and shows a notification
         function updateCart(itemName, price, quantity, showNotif = true) {
             if (quantity > 0) {
                 state.cart[itemName] = { price, quantity };
@@ -918,32 +856,29 @@
                 }
             }
             updateCartUI();
+            renderOrderSummary(); // Ensure order summary updates immediately
         }
 
-        // Updates the UI of the cart buttons and summary
         function updateCartUI() {
-            const mainItems = menuData.filter(item => item.category !== 'Add-ons');
+            const allItems = Object.values(menuData).flat();
+            const mainItems = allItems.filter(item => item.category !== 'Add-ons');
             const mainItemsInCart = mainItems.filter(item => state.cart[item.name]);
-            const addonsInCart = menuData.filter(item => item.category === 'Add-ons' && state.cart[item.name]);
-            
+            const addonsInCart = allItems.filter(item => item.category === 'Add-ons' && state.cart[item.name]);
             const totalMainItems = mainItemsInCart.reduce((sum, item) => sum + state.cart[item.name].quantity, 0);
             const totalAddons = addonsInCart.reduce((sum, item) => sum + state.cart[item.name].quantity, 0);
-            
             const totalItems = totalMainItems + totalAddons;
             const totalAmount = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
             if (totalMainItems > 0) {
                 viewCartBubble.style.display = 'flex';
                 mainCartTotalBubble.textContent = totalMainItems;
             } else {
                 viewCartBubble.style.display = 'none';
             }
-            
             finalCartTotal.textContent = `${totalItems} items`;
             orderTotalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
+            renderOrderSummary(); // Always update summary when cart changes
         }
 
-        // Shows a notification message
         function showNotification(message) {
             const notificationMessage = document.getElementById('notificationMessage');
             notificationMessage.textContent = message;
@@ -951,15 +886,50 @@
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
 
-        // Attaches all global event listeners
+        async function placeOrder() {
+            const orderData = {
+                customer_name: "Guest", // Placeholder, will be collected later
+                customer_phone: "0000000000", // Placeholder
+                items: Object.keys(state.cart).map(name => ({
+                    name: name,
+                    quantity: state.cart[name].quantity
+                })),
+                total_price: Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0)
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to place order');
+                }
+
+                const result = await response.json();
+                localStorage.setItem('lastOrder', JSON.stringify({ ...orderData, orderId: result.order_id, status: 'Pending Confirmation' }));
+                
+                state.cart = {};
+                updateCartUI();
+                checkIfRecentOrderExists();
+                window.location.href = 'order.html';
+
+            } catch (error) {
+                console.error('Order placement error:', error);
+                alert('There was an error placing your order. Please try again.');
+            }
+        }
+
         function attachEventListeners() {
-            // Search input
             searchInput.addEventListener('input', (e) => {
                 state.searchQuery = e.target.value;
                 renderMenu();
             });
 
-            // Filter buttons
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -969,72 +939,36 @@
                 });
             });
 
-            // Category headers (for expand/collapse)
             document.addEventListener('click', (e) => {
                 if (e.target.closest('.category-header')) {
                     e.target.closest('.category').classList.toggle('collapsed');
                 }
             });
 
-            // Main "View Cart" bubble
             viewCartBubble.addEventListener('click', () => {
                 mainMenuContainer.style.display = 'none';
                 addonsContainer.style.display = 'block';
-                viewCartBubble.style.display = 'none'; // Hide the bubble when in summary view
-                orderStatusBubble.style.display = 'none'; // Hide the status bubble as well
+                viewCartBubble.style.display = 'none';
+                orderStatusBubble.style.display = 'none';
                 renderOrderSummary();
                 updateCartUI();
             });
             
-            // "Back to Menu" button
             backToMenuButton.addEventListener('click', () => {
                 mainMenuContainer.style.display = 'block';
                 addonsContainer.style.display = 'none';
-                checkIfRecentOrderExists(); // Check and show the status bubble if needed
-                updateCartUI();
-            });
-            
-            // New "Check Status" button
-            orderStatusBubble.addEventListener('click', () => {
-                // This is an anchor tag now, so it will redirect automatically
-            });
-            
-            // Event listener for changes to localStorage from other tabs
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'lastOrder') {
-                    checkIfRecentOrderExists();
-                } else if (e.key === 'menuData') {
-                    // Update menu if admin changes it from another tab
-                    window.location.reload();
-                }
-            });
-
-            // "Finalize Order" button
-            finalCheckoutButton.addEventListener('click', () => {
-                const finalOrder = {
-                    orderNumber: Math.floor(Math.random() * 10000),
-                    tableNumber: 5,
-                    items: state.cart,
-                    totalPrice: Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                    status: 'Pending Confirmation'
-                };
-                
-                localStorage.setItem('lastOrder', JSON.stringify(finalOrder));
-                
-                state.cart = {};
-                updateCartUI();
-                
                 checkIfRecentOrderExists();
-
-                window.location.href = 'order.html';
+                updateCartUI();
             });
+            
+            finalCheckoutButton.addEventListener('click', placeOrder);
 
-            // Event delegation for quantity controls
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('increase') || e.target.classList.contains('decrease')) {
                     const itemElement = e.target.closest('.menu-item');
                     const itemName = itemElement.dataset.name;
-                    const menuItem = menuData.find(i => i.name === itemName);
+                    const allItems = Object.values(menuData).flat();
+                    const menuItem = allItems.find(i => i.name === itemName);
                     const quantityInput = itemElement.querySelector('.quantity-input');
                     let quantity = parseInt(quantityInput.value) || 0;
 
@@ -1050,12 +984,12 @@
                 }
             });
             
-            // Event listener for manual input changes
             document.addEventListener('change', (e) => {
                 if (e.target.classList.contains('quantity-input')) {
                     const itemElement = e.target.closest('.menu-item');
                     const itemName = itemElement.dataset.name;
-                    const menuItem = menuData.find(i => i.name === itemName);
+                    const allItems = Object.values(menuData).flat();
+                    const menuItem = allItems.find(i => i.name === itemName);
                     let quantity = parseInt(e.target.value) || 0;
                     if (quantity < 0) quantity = 0;
                     e.target.value = quantity;
