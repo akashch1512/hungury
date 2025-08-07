@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -467,6 +466,18 @@
             color: var(--primary-color);
             margin-bottom: 1rem;
             animation: bounce 1.5s infinite;
+            position: relative;
+            display: inline-block;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        /* Scale down the smile curve for the loader */
+        .loader-logo .smile-curve {
+            width: 24px;
+            height: 12px;
+            bottom: -12px;
+            border-width: 3px;
+            border-radius: 0 0 30px 30px;
         }
 
         .loader-spinner {
@@ -486,7 +497,13 @@
 <body>
     <div class="loader" id="loader">
         <div class="loader-content">
-            <div class="loader-logo">Hungryy</div>
+            <div class="loader-logo">
+                h
+                <span class="logo-text">
+                    <div class="smile-curve"></div>
+                </span>
+                ungryy
+            </div>
             <div class="loader-spinner"></div>
         </div>
     </div>
