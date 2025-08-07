@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Booking - Hungry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #FF5A5F;
+    }
+    .smile-curve {
+      width: 25px;
+      height: 15px;
+      border: 3px solid #FF5A5F;
+      border-top-color: transparent;
+      border-radius: 0 0 50px 50px;
+      margin: auto;
+      margin-top: -10px;
+    }
+    .subtitle {
+      color: #767676;
+      margin-top: 10px;
+    }
+    .table-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .table-card:hover {
+      transform: scale(1.02);
+    }
+    .table-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .status {
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .available {
+      background-color: #00B14F;
+      color: white;
+    }
+    .occupied {
+      background-color: #E74C3C;
+      color: white;
+    }
+    .timestamp {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 10px;
+    }
+    .book-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #00A699;
+      border: none;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    .book-btn:hover {
+      background-color: #00857a;
+    }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">Hungryy</div>
+      <div class="smile-curve"></div>
+      <p class="subtitle">Reserve your table effortlessly!</p>
+    </div>
+
+    <div class="table-grid" id="tableContainer">
+      <!-- JS will render table cards here -->
+    </div>
+
+    <div class="footer">
+      Made with ❤️ for your dining comfort.
+    </div>
+  </div>
+
+  <script>
+    const tables = [
+      { id: 1, occupied: true, time: 'Today 7:00 PM' },
+      { id: 2, occupied: false },
+      { id: 3, occupied: false },
+      { id: 4, occupied: true, time: 'Today 6:30 PM' },
+      { id: 5, occupied: false },
+    ]; // Sample data; to be replaced with backend data later
+
+    const container = document.getElementById('tableContainer');
+
+    tables.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'table-card';
+
+      card.innerHTML = `
+        <div class="table-number">Table ${t.id}</div>
+        <div class="status ${t.occupied ? 'occupied' : 'available'}">
+          ${t.occupied ? 'Occupied' : 'Available'}
+        </div>
+        ${t.occupied ? `<div class="timestamp">${t.time}</div>` : ''}
+        ${!t.occupied ? `<button class="book-btn" onclick="bookTable(${t.id})">Book Now</button>` : ''}
+      `;
+
+      container.appendChild(card);
+    });
+
+    function bookTable(tableId) {
+      // Redirect with ?table=ID param
+      window.location.href = `menu.html?table=${tableId}`;
+    }
+  </script>
+</body>
+</html>
